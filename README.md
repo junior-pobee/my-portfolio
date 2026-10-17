@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=venom&height=280&text=EMMANUEL%20POBEE&fontSize=48&fontColor=ffffff&stroke=00E5FF&strokeWidth=2&animation=fadeIn&desc=FRONT-END%20DEVELOPER%20%7C%20TECH%20ENTHUSIAST%20%7C%20BUILDER&descSize=15&descAlignY=65&color=0:080B16,50:111A35,100:241044" width="100%" alt="Emmanuel Pobee futuristic banner"/>
+<img src="https://capsule-render.vercel.app/api?type=rect&height=250&text=EMMANUEL%20POBEE&fontSize=48&fontColor=ffffff&animation=fadeIn&desc=FRONT-END%20DEVELOPER%20%7C%20TECH%20ENTHUSIAST%20%7C%20BUILDER&descSize=15&descAlignY=68&color=0:080B16,50:111A35,100:241044" width="100%" alt="Emmanuel Pobee futuristic banner"/>
 
 <br/>
 
