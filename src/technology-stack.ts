@@ -1,4 +1,4 @@
-export type TechnologyCategory = "Frontend" | "Data" | "Graphics" | "Automation";
+export type TechnologyCategory = "Frontend" | "Backend" | "Data" | "Graphics" | "Automation";
 
 export interface Technology {
   name: string;
@@ -16,6 +16,7 @@ export const technologies: Technology[] = [
   { name: "React", category: "Frontend", description: "Reusable component-driven user interfaces.", stage: "Exploring", tags: ["Components", "UI"] },
   { name: "Tailwind CSS", category: "Frontend", description: "Utility-first styling for consistent design systems.", stage: "Exploring", tags: ["CSS", "Design"] },
   { name: "Next.js", category: "Frontend", description: "React application architecture and full-stack web patterns.", stage: "Exploring", tags: ["React", "Framework"] },
+  { name: "Node.js", category: "Backend", description: "JavaScript runtime for tooling, servers, and developer workflows.", stage: "Exploring", tags: ["JavaScript", "Runtime"] },
   { name: "SQL", category: "Data", description: "Structured queries and relational database concepts.", stage: "Learning", tags: ["Database", "Queries"] },
   { name: "Supabase", category: "Data", description: "Managed database, authentication, and application services.", stage: "Building", tags: ["Backend", "Database"] },
   { name: "Python", category: "Data", description: "General-purpose programming, scripting, and data workflows.", stage: "Exploring", tags: ["Programming", "Automation"] },
@@ -40,7 +41,7 @@ if (explorer) {
   const search = explorer.querySelector<HTMLInputElement>("[data-stack-search]");
   const results = explorer.querySelector<HTMLElement>("[data-stack-results]");
   const count = explorer.querySelector<HTMLElement>("[data-stack-count]");
-  const categories: Array<TechnologyCategory | "All"> = ["All", "Frontend", "Data", "Graphics", "Automation"];
+  const categories: Array<TechnologyCategory | "All"> = ["All", "Frontend", "Backend", "Data", "Graphics", "Automation"];
 
   if (filters && search && results && count) {
     let activeCategory: TechnologyCategory | "All" = "All";
