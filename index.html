@@ -1507,6 +1507,7 @@ html[data-theme=light] footer{background:var(--surface)}
 </style>
   <link rel="stylesheet" href="assets/css/immersive.css">
   <link rel="stylesheet" href="assets/css/technology-stack.css">
+<link rel="stylesheet" href="assets/css/build-lab.css">
 </head>
 
 <body>
@@ -1544,6 +1545,7 @@ html[data-theme=light] footer{background:var(--surface)}
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#technology">Tech Stack</a>
+      <a href="#buildlab">Build Lab</a>
       <a href="#projects">Projects</a>
       <a href="#journey">Journey</a>
       <a href="#gallery">Gallery</a>
@@ -1962,6 +1964,59 @@ html[data-theme=light] footer{background:var(--surface)}
 <!-- ======================================
      PROJECTS
 ====================================== -->
+
+<section id="buildlab">
+  <div class="container">
+    <div class="section-heading reveal">
+      <p class="eyebrow">Build • Experiment • Learn</p>
+      <h2>The <span class="gradient-text">developer lab.</span></h2>
+      <p>Explore a small React-powered interface, a real-time GLSL shader, and a safe browser playground for HTML, CSS, and JavaScript.</p>
+    </div>
+    <div class="lab-feature-grid">
+      <article class="lab-panel card glass">
+        <div class="lab-panel-heading"><span class="lab-kicker">REACT 19</span><span class="lab-live"><i></i> Interactive</span></div>
+        <h3>Component state demo</h3>
+        <p class="muted">A React component that updates its own state without reloading the page.</p>
+        <div id="reactLabRoot" class="react-lab-root"><p class="lab-loading">Loading the React demonstration…</p></div>
+        <p class="lab-footnote" id="reactLabStatus" aria-live="polite">React loads when this panel enters view.</p>
+      </article>
+      <article class="lab-panel card glass">
+        <div class="lab-panel-heading"><span class="lab-kicker">GLSL / WEBGL</span><span class="lab-live"><i></i> Live shader</span></div>
+        <h3>Procedural light field</h3>
+        <p class="muted">A lightweight fragment shader generates animated colour fields directly on the GPU.</p>
+        <div class="shader-frame"><canvas id="shaderCanvas" aria-label="Animated GLSL shader demonstration"></canvas><span id="shaderStatus">Preparing shader…</span></div>
+        <p class="lab-footnote">Rendering pauses when this panel is off-screen or the tab is hidden.</p>
+      </article>
+    </div>
+    <article class="lab-panel card glass code-lab">
+      <div class="lab-panel-heading"><span class="lab-kicker">HTML • CSS • JAVASCRIPT</span><span class="lab-live"><i></i> Sandboxed preview</span></div>
+      <div class="code-lab-heading"><div><h3>Browser playground</h3><p class="muted">Edit the sample, then run it. Your code executes in an isolated preview frame.</p></div><div class="code-actions"><button class="btn btn-outline" id="resetPlayground" type="button">Reset</button><button class="btn btn-primary" id="runPlayground" type="button">Run preview ↗</button></div></div>
+      <div class="code-editor-grid">
+        <label class="code-editor"><span>HTML</span><textarea id="playgroundHtml" spellcheck="false" autocapitalize="off" autocomplete="off"><main class="demo">
+  <span class="eyebrow">MY FIRST COMPONENT</span>
+  <h1>Hello, builder.</h1>
+  <p>Change this HTML and run the preview.</p>
+  <button id="demoButton">Click me</button>
+  <p id="demoOutput">Your interaction appears here.</p>
+</main></textarea></label>
+        <label class="code-editor"><span>CSS</span><textarea id="playgroundCss" spellcheck="false" autocapitalize="off" autocomplete="off">body { font-family: system-ui; background: #071426; color: #eef8ff; padding: 24px; }
+.demo { max-width: 440px; margin: auto; padding: 28px; border: 1px solid #31516e; border-radius: 20px; background: #10233b; }
+.eyebrow { color: #55e7ff; letter-spacing: 2px; font-size: 11px; }
+button { border: 0; border-radius: 9px; padding: 11px 16px; background: #55e7ff; color: #071426; font-weight: 700; }</textarea></label>
+        <label class="code-editor"><span>JAVASCRIPT</span><textarea id="playgroundJs" spellcheck="false" autocapitalize="off" autocomplete="off">const button = document.querySelector("#demoButton");
+const output = document.querySelector("#demoOutput");
+let clicks = 0;
+button.addEventListener("click", () => {
+  clicks += 1;
+  output.textContent = "You clicked " + clicks + " time" + (clicks === 1 ? "" : "s") + ".";
+});</textarea></label>
+      </div>
+      <div class="preview-heading"><strong>Live output</strong><span id="previewStatus" aria-live="polite">Ready to run</span></div>
+      <iframe id="playgroundPreview" title="Sandboxed code playground preview" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
+    </article>
+    <p class="lab-disclaimer">These are learning demonstrations. The React and shader modules require a modern browser with internet access and WebGL support. The code playground runs locally in your browser.</p>
+  </div>
+</section>
 
 <section id="projects">
   <div class="container">
@@ -3370,5 +3425,6 @@ syncForest();
 </script>
   <script type="module" src="assets/js/technology-stack.js"></script>
   <script type="module" src="assets/js/immersive.js"></script>
+  <script type="module" src="assets/js/build-lab.js"></script>
 </body>
 </html>
