@@ -1988,6 +1988,25 @@ html[data-theme=light] footer{background:var(--surface)}
         <p class="lab-footnote">Rendering pauses when this panel is off-screen or the tab is hidden.</p>
       </article>
     </div>
+    <article class="lab-panel card glass python-lab typescript-lab">
+      <div class="lab-panel-heading"><span class="lab-kicker">TYPESCRIPT • COMPILER</span><span class="lab-live"><i></i> On-demand compiler</span></div>
+      <div class="code-lab-heading"><div><h3>TypeScript playground</h3><p class="muted">Write typed JavaScript, compile it in your browser, and run the result in an isolated preview.</p></div><div class="code-actions"><button class="btn btn-outline" id="resetTypeScript" type="button">Reset</button><button class="btn btn-primary" id="runTypeScript" type="button">Compile &amp; run</button></div></div>
+      <label class="code-editor python-editor"><span>TYPESCRIPT CODE</span><textarea id="typeScriptCode" spellcheck="false" autocapitalize="off" autocomplete="off">type Builder = {
+  name: string;
+  goal: string;
+};
+
+const builder: Builder = {
+  name: "Emmanuel",
+  goal: "Build useful technology"
+};
+
+const message: string = `${builder.name} is ready to ${builder.goal}.`;
+document.body.innerHTML = `<main style="font-family:system-ui;padding:24px;color:#eaf7ff;background:#071426;min-height:100vh"><h1>TypeScript compiled successfully</h1><p>${message}</p></main>`;</textarea></label>
+      <div class="preview-heading"><strong>Compiler output</strong><span id="typeScriptStatus" aria-live="polite">Compiler not loaded</span></div>
+      <pre id="typeScriptOutput" class="python-output" aria-live="polite">Press Compile &amp; run to load the TypeScript compiler.</pre>
+      <iframe id="typeScriptPreview" title="TypeScript playground output" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
+    </article>
     <article class="lab-panel card glass python-lab">
       <div class="lab-panel-heading"><span class="lab-kicker">PYTHON • WEBASSEMBLY</span><span class="lab-live"><i></i> On-demand runtime</span></div>
       <div class="code-lab-heading"><div><h3>Python playground</h3><p class="muted">Run Python directly in your browser. The runtime loads only when you press Start, helping keep the portfolio lightweight.</p></div><div class="code-actions"><button class="btn btn-outline" id="resetPython" type="button">Reset</button><button class="btn btn-primary" id="runPython" type="button">Start Python</button></div></div>
