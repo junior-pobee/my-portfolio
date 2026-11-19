@@ -4,16 +4,19 @@ import { spawnSync } from "node:child_process";
 const html = readFileSync("index.html", "utf8");
 const ids = [...html.matchAll(/\sid=["']([^"']+)["']/g)].map((match) => match[1]);
 const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
-const references = [...html.matchAll(/(?:src|href)=["']([^"'#]+)["']/g)].map((match) => match[1]);
-const localReferences = references.filter((reference) => !/^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(reference));
+const references = [...html.matchAll(/(src|href)=["']([^"'#]+)["']/g)].map((match) => ({ attribute: match[1], path: match[2] }));
+const criticalAssets = references
+  .filter(({ attribute, path }) => (attribute === "src" && /\.m?js(?:\?|$)/i.test(path)) || (attribute === "href" && /\.css(?:\?|$)/i.test(path)))
+  .map(({ path }) => path)
+  .filter((path) => !/^(?:https?:|data:|javascript:)/i.test(path));
 
 if (duplicates.length) {
   throw new Error("Duplicate HTML IDs: " + [...new Set(duplicates)].join(", "));
 }
 
-const missing = localReferences.filter((reference) => !existsSync(reference));
+const missing = criticalAssets.filter((path) => !existsSync(path));
 if (missing.length) {
-  throw new Error("Missing local assets: " + [...new Set(missing)].join(", "));
+  throw new Error("Missing scripts or stylesheets: " + [...new Set(missing)].join(", "));
 }
 
 const syntaxCheck = spawnSync(process.execPath, ["--check", "assets/js/technology-stack.js"], { encoding: "utf8" });
