@@ -60,4 +60,4 @@ resetButton?.addEventListener("click",()=>{
   if(status)status.textContent=compiler?"Compiler ready":"Compiler not loaded";
   if(preview)preview.srcdoc="";
 });
-export {executeTypeScript as runTypeScript};
+export {executeTypeScript as runTypeScript,resetTypeScript};
