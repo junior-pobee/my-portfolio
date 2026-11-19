@@ -12,6 +12,7 @@ async function loadCompiler(){
   if(!compilerPromise){
     compilerPromise=import("https://cdn.jsdelivr.net/npm/typescript@5.8.3/+esm").then(module=>{
       compiler=module.default||module;
+      if(!compiler.transpileModule)throw new Error("TypeScript compiler API is unavailable");
       return compiler;
     }).catch(error=>{
       compilerPromise=null;
@@ -43,7 +44,7 @@ async function executeTypeScript(){
       return;
     }
     const safeCode=result.outputText.replace(/<\/script/gi,"<\\/script");
-    preview.srcdoc="<!doctype html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body><script>"+safeCode+"<\\/script></body></html>";
+    preview.srcdoc="<!doctype html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body><script>"+safeCode+"</script></body></html>";
     output.textContent="Compilation successful. JavaScript was generated and sent to the isolated preview.";
     status.textContent="Compiled successfully";
   }catch(error){
@@ -53,11 +54,12 @@ async function executeTypeScript(){
     runButton.disabled=false;
   }
 }
-runButton?.addEventListener("click",executeTypeScript);
-resetButton?.addEventListener("click",()=>{
+function resetTypeScript(){
   if(editor)editor.value=initial;
   if(output)output.textContent="Sample restored. Press Compile & run to execute it.";
   if(status)status.textContent=compiler?"Compiler ready":"Compiler not loaded";
   if(preview)preview.srcdoc="";
-});
+}
+runButton?.addEventListener("click",executeTypeScript);
+resetButton?.addEventListener("click",resetTypeScript);
 export {executeTypeScript as runTypeScript,resetTypeScript};
