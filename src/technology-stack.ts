@@ -32,3 +32,63 @@ export function filterTechnologies(items: Technology[], category: TechnologyCate
     return matchesCategory && searchableText.includes(normalizedQuery);
   });
 }
+
+const explorer = document.getElementById("stackExplorer");
+
+if (explorer) {
+  const filters = explorer.querySelector<HTMLElement>("[data-stack-filters]");
+  const search = explorer.querySelector<HTMLInputElement>("[data-stack-search]");
+  const results = explorer.querySelector<HTMLElement>("[data-stack-results]");
+  const count = explorer.querySelector<HTMLElement>("[data-stack-count]");
+  const categories: Array<TechnologyCategory | "All"> = ["All", "Frontend", "Data", "Graphics", "Automation"];
+
+  if (filters && search && results && count) {
+    let activeCategory: TechnologyCategory | "All" = "All";
+
+    const createElement = <K extends keyof HTMLElementTagNameMap>(tag: K, className = "", content = ""): HTMLElementTagNameMap[K] => {
+      const element = document.createElement(tag);
+      if (className) element.className = className;
+      if (content) element.textContent = content;
+      return element;
+    };
+
+    const renderFilters = (): void => {
+      filters.replaceChildren();
+      categories.forEach((category) => {
+        const button = createElement("button", "stack-filter", category);
+        button.type = "button";
+        button.setAttribute("aria-pressed", String(activeCategory === category));
+        button.addEventListener("click", () => {
+          activeCategory = category;
+          renderFilters();
+          renderResults();
+        });
+        filters.append(button);
+      });
+    };
+
+    const renderResults = (): void => {
+      const visible = filterTechnologies(technologies, activeCategory, search.value);
+      results.replaceChildren();
+      visible.forEach((item) => {
+        const card = createElement("article", "stack-result");
+        const top = createElement("div", "stack-result-top");
+        top.append(createElement("span", "stack-result-category", item.category));
+        top.append(createElement("span", "stack-result-stage", item.stage));
+        card.append(top);
+        card.append(createElement("h4", "", item.name));
+        card.append(createElement("p", "", item.description));
+        const tags = createElement("div", "stack-result-tags");
+        item.tags.forEach((tag) => tags.append(createElement("span", "", tag)));
+        card.append(tags);
+        results.append(card);
+      });
+      count.textContent = `${visible.length} ${visible.length === 1 ? "technology" : "technologies"}`;
+      if (!visible.length) results.append(createElement("p", "stack-empty", "No matching technologies. Try another search."));
+    };
+
+    search.addEventListener("input", renderResults);
+    renderFilters();
+    renderResults();
+  }
+}
