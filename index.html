@@ -3165,41 +3165,33 @@ function drawRay(ray, time) {
 }
 
 function renderOcean(timestamp) {
-  if (!document.hidden && document.documentElement.dataset.theme !== 'light' && !(window.__sk && ((window.__f = (window.__f || 0) + 1) & 1))) {
+  animationFrame = null;
+  if (document.hidden || document.documentElement.dataset.theme === "light") return;
+
+  if (!lastFrame || timestamp - lastFrame >= 1000 / 30) {
     const time = timestamp / 1000;
-
-    const delta = lastFrame
-      ? Math.min((timestamp - lastFrame) / 1000, 0.04)
-      : 0.016;
-
+    const delta = lastFrame ? Math.min((timestamp - lastFrame) / 1000, 0.05) : 0.033;
     lastFrame = timestamp;
-
     ctx.clearRect(0, 0, width, height);
-
-    /*
-      Light rays behind the fish.
-    */
-
     rays.forEach(ray => drawRay(ray, time));
-
-    /*
-      Fine suspended particles.
-    */
-
     particles.forEach(p => drawParticle(p, time, delta));
-
-    /*
-      Draw fish from distant to near to enhance
-      the appearance of depth.
-    */
-
-    fish
-      .slice()
-      .sort((a, b) => a.depth - b.depth)
-      .forEach(f => drawFish(f, time, delta));
+    fish.forEach(f => drawFish(f, time, delta));
   }
 
   animationFrame = requestAnimationFrame(renderOcean);
+}
+
+function startOcean() {
+  if (animationFrame === null && !document.hidden && document.documentElement.dataset.theme !== "light") {
+    lastFrame = 0;
+    animationFrame = requestAnimationFrame(renderOcean);
+  }
+}
+
+function stopOcean() {
+  if (animationFrame !== null) cancelAnimationFrame(animationFrame);
+  animationFrame = null;
+  lastFrame = 0;
 }
 
 window.addEventListener("resize", resizeOcean);
@@ -3210,11 +3202,18 @@ window.addEventListener("pointermove", event => {
 }, { passive: true });
 
 document.addEventListener("visibilitychange", () => {
-  lastFrame = 0;
+  if (document.hidden) stopOcean();
+  else startOcean();
 });
 
+const oceanThemeObserver = new MutationObserver(() => {
+  if (document.documentElement.dataset.theme === "light") stopOcean();
+  else startOcean();
+});
+oceanThemeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
 resizeOcean();
-renderOcean(0);
+startOcean();
 
 
 /* ==========================================
@@ -3353,7 +3352,8 @@ function animal(a,dt){const u=a.z*H*.07,y=H*.955,d=a.v>=0?1:-1,ph=T*(a.k==='rabb
   fx.beginPath();fx.ellipse(u*.9,hy,u*.3,u*.2,0,0,7);fx.fill();if(a.k!=='deer'){fx.beginPath();fx.moveTo(u*.8,hy-u*.1);fx.lineTo(u*.78,hy-u*.45);fx.lineTo(u*.95,hy-u*.1);fx.fill()}
   fx.beginPath();fx.ellipse(-u*.95,-u*(a.k==='squirrel'?1.5:1),u*(a.k==='fox'||a.k==='squirrel'?.55:.16),u*.2,-.6,0,7);fx.fill()}
  fx.restore();a.x+=a.v*dt;if(a.x>1.15)a.x=-.15;if(a.x<-.15)a.x=1.15}
-function frame(ts){requestAnimationFrame(frame);if(root.dataset.theme!=='light'||document.hidden)return;if(window.__sk&&((window.__f=(window.__f||0)+1)&1))return;const dt=Math.min((ts-last)/1000||.016,.05);last=ts;T+=rm?0:dt;fx.clearRect(0,0,W,H);
+let forestFrame=0,forestLast=0;
+function frame(ts){forestFrame=0;if(root.dataset.theme!=='light'||document.hidden)return;if(ts-forestLast<1000/30){forestFrame=requestAnimationFrame(frame);return}const dt=Math.min((ts-forestLast)/1000||.033,.05);forestLast=ts;T+=rm?0:dt;fx.clearRect(0,0,W,H);
  const sg=fx.createRadialGradient(W*.78,H*.62,0,W*.78,H*.62,H*.5);sg.addColorStop(0,'rgba(255,214,120,.95)');sg.addColorStop(.25,'rgba(255,160,70,.45)');sg.addColorStop(1,'rgba(255,120,60,0)');fx.fillStyle=sg;fx.fillRect(0,0,W,H);fx.fillStyle='#ffe08a';fx.beginPath();fx.arc(W*.78,H*.62,H*.07,0,7);fx.fill();
  trees(Math.ceil(W/90),H*.78,H*.3,'rgba(90,70,110,.55)',3,1);trees(Math.ceil(W/70),H*.86,H*.26,'rgba(45,95,70,.8)',5,4);trees(Math.ceil(W/55),H*.94,H*.2,'#1d4430',7,9);
  an.forEach(a=>animal(a,rm?0:dt));
@@ -3361,7 +3361,11 @@ function frame(ts){requestAnimationFrame(frame);if(root.dataset.theme!=='light'|
  bf.forEach(b=>{const x=b.x*W+Math.sin(T*.7+b.p)*90,y=b.y*H+Math.cos(T*1.1+b.p)*40,w=Math.abs(Math.sin(T*10+b.p))*7+1;fx.fillStyle=b.c;fx.beginPath();fx.ellipse(x-w/2,y,w,5,0,0,7);fx.ellipse(x+w/2,y,w,5,0,0,7);fx.fill()});
  flies.forEach(f=>{f.y-=f.v*dt*(rm?0:1);if(f.y<.5)f.y=.95;const x=f.x*W+Math.sin(T+f.p)*18,y=f.y*H,a=.4+.6*Math.abs(Math.sin(T*2+f.p));fx.fillStyle='rgba(255,235,120,'+a+')';fx.shadowColor='#ffd84d';fx.shadowBlur=10;fx.beginPath();fx.arc(x,y,2,0,7);fx.fill();fx.shadowBlur=0});
  fx.fillStyle='#c2551d';leaves.forEach(l=>{l.y+=dt*.04*(rm?0:1);l.x+=Math.sin(T+l.p)*dt*.02;if(l.y>1){l.y=-.05;l.x=R(0,1)}fx.save();fx.translate(l.x*W,l.y*H);fx.rotate(T+l.p);fx.beginPath();fx.ellipse(0,0,6,3,0,0,7);fx.fill();fx.restore()})}
-requestAnimationFrame(frame);
+function syncForest(){if(root.dataset.theme==='light'&&!document.hidden){if(!forestFrame){forestLast=0;forestFrame=requestAnimationFrame(frame)}}else if(forestFrame){cancelAnimationFrame(forestFrame);forestFrame=0;forestLast=0}}
+const forestThemeObserver=new MutationObserver(syncForest);
+forestThemeObserver.observe(root,{attributes:true,attributeFilter:['data-theme']});
+document.addEventListener('visibilitychange',syncForest);
+syncForest();
 })();
 </script>
   <script type="module" src="assets/js/technology-stack.js"></script>
