@@ -17,7 +17,16 @@ if(section&&"IntersectionObserver"in window){
 }else loadModules();
 
 const pythonRunButton=document.getElementById("runPython");
-pythonRunButton?.addEventListener("click",()=>import("./python-lab.js").catch(error=>{const output=document.getElementById("pythonOutput");const status=document.getElementById("pythonStatus");if(output)output.textContent=String(error);if(status)status.textContent="Python module failed to load"}),{once:true});
+let pythonModulePromise;
+function loadPythonModule(){if(!pythonModulePromise)pythonModulePromise=import("./python-lab.js");return pythonModulePromise}
+pythonRunButton?.addEventListener("click",()=>loadPythonModule().then(module=>module.runPython()).catch(error=>{const output=document.getElementById("pythonOutput");const status=document.getElementById("pythonStatus");if(output)output.textContent=String(error);if(status)status.textContent="Python module failed to load"}),{once:true});
+document.getElementById("resetPython")?.addEventListener("click",()=>loadPythonModule().catch(()=>{}),{once:true});
+
+const typeScriptRunButton=document.getElementById("runTypeScript");
+let typeScriptModulePromise;
+function loadTypeScriptModule(){if(!typeScriptModulePromise)typeScriptModulePromise=import("./typescript-lab.js");return typeScriptModulePromise}
+typeScriptRunButton?.addEventListener("click",()=>loadTypeScriptModule().then(module=>module.runTypeScript()).catch(error=>{const output=document.getElementById("typeScriptOutput");const status=document.getElementById("typeScriptStatus");if(output)output.textContent=String(error);if(status)status.textContent="TypeScript compiler failed to load"}),{once:true});
+document.getElementById("resetTypeScript")?.addEventListener("click",()=>loadTypeScriptModule().catch(()=>{}),{once:true});
 
 const htmlEditor=document.getElementById("playgroundHtml");
 const cssEditor=document.getElementById("playgroundCss");
