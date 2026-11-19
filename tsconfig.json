@@ -4,9 +4,11 @@
     "module": "ES2020",
     "moduleResolution": "Bundler",
     "strict": true,
-    "noEmit": true,
+    "noEmit": false,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "src",
+    "outDir": "assets/js"
   },
   "include": ["src/**/*.ts"]
 }
