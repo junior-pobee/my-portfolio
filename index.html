@@ -1938,6 +1938,20 @@ html[data-theme=light] footer{background:var(--surface)}
       </article>
     </div>
 
+    <div class="stack-explorer card reveal" id="stackExplorer">
+      <div class="stack-explorer-heading">
+        <div>
+          <p class="eyebrow">Interactive directory</p>
+          <h3>Explore my <span class="gradient-text">technology stack.</span></h3>
+        </div>
+        <span class="stack-result-count" data-stack-count aria-live="polite">13 technologies</span>
+      </div>
+      <label class="stack-search-label" for="stackSearch">Search technologies</label>
+      <input class="stack-search" id="stackSearch" type="search" placeholder="Search a language, framework, or tool..." data-stack-search autocomplete="off">
+      <div class="stack-filters" data-stack-filters aria-label="Filter technologies"></div>
+      <div class="stack-results" data-stack-results aria-live="polite"></div>
+    </div>
+
     <div class="technology-note glass">
       <span class="technology-note-mark">↗</span>
       <p>This roadmap represents technologies I am building knowledge in. It is not a claim of professional mastery or production experience.</p>
@@ -3350,6 +3364,7 @@ function frame(ts){requestAnimationFrame(frame);if(root.dataset.theme!=='light'|
 requestAnimationFrame(frame);
 })();
 </script>
+  <script type="module" src="assets/js/technology-stack.js"></script>
   <script type="module" src="assets/js/immersive.js"></script>
 </body>
 </html>
