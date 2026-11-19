@@ -12,11 +12,11 @@ if (canvas && hero) {
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
-    antialias: !smallScreen.matches,
+    antialias: false,
     powerPreference: "low-power"
   });
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, smallScreen.matches ? 1.25 : 1.7));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, smallScreen.matches ? 1 : 1.35));
   renderer.setSize(canvas.clientWidth || 420, canvas.clientHeight || 500, false);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -86,7 +86,7 @@ if (canvas && hero) {
 
   ringSettings.forEach((settings, index) => {
     const ring = new THREE.Mesh(
-      new THREE.TorusGeometry(settings.radius, settings.tube, 8, 180),
+      new THREE.TorusGeometry(settings.radius, settings.tube, 6, 96),
       new THREE.MeshBasicMaterial({
         color: settings.color,
         transparent: true,
@@ -119,7 +119,7 @@ if (canvas && hero) {
     return node;
   });
 
-  const starCount = smallScreen.matches ? 520 : 1050;
+  const starCount = smallScreen.matches ? 180 : 420;
   const starPositions = new Float32Array(starCount * 3);
   const starColors = new Float32Array(starCount * 3);
 
@@ -156,6 +156,8 @@ if (canvas && hero) {
   const pointer = new THREE.Vector2(0, 0);
   const targetRotation = new THREE.Vector2(0, 0);
   const clock = new THREE.Clock();
+  const frameInterval = 1000 / 30;
+  let lastRenderedFrame = 0;
   let active = !reducedMotion.matches;
   let visible = true;
   let frame = 0;
@@ -166,7 +168,7 @@ if (canvas && hero) {
     camera.aspect = width / height;
     camera.position.z = smallScreen.matches ? 8.6 : 7.8;
     camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, smallScreen.matches ? 1.15 : 1.7));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, smallScreen.matches ? 1 : 1.35));
     renderer.setSize(width, height, false);
     renderer.render(scene, camera);
   };
@@ -175,13 +177,15 @@ if (canvas && hero) {
     renderer.render(scene, camera);
   };
 
-  const animate = () => {
+  const animate = timestamp => {
     if (!active || !visible || document.hidden) {
       frame = 0;
       return;
     }
 
     frame = requestAnimationFrame(animate);
+    if (timestamp - lastRenderedFrame < frameInterval) return;
+    lastRenderedFrame = timestamp;
     const elapsed = clock.getElapsedTime();
     root.rotation.y = elapsed * .08 + targetRotation.x;
     root.rotation.x = Math.sin(elapsed * .14) * .06 + targetRotation.y;
@@ -219,8 +223,10 @@ if (canvas && hero) {
       toggle.setAttribute("aria-pressed", String(!next));
       toggle.textContent = next ? "Pause 3D motion" : "Resume 3D motion";
     }
-    if (active) start();
-    else {
+    if (active) {
+      lastRenderedFrame = 0;
+      start();
+    } else {
       stop();
       render();
     }
