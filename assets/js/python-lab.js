@@ -38,6 +38,7 @@ async function executePython(){
   }
 }
 runButton?.addEventListener("click",executePython);
+export {executePython as runPython};
 resetButton?.addEventListener("click",()=>{
   if(editor)editor.value=initial;
   if(output)output.textContent="Sample restored. Press Run Python to execute it.";
