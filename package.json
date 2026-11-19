@@ -1,0 +1,13 @@
+{
+  "name": "emmanuel-pobee-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "validate": "node scripts/validate.mjs",
+    "check": "npm run typecheck && npm run validate"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3"
+  }
+}
