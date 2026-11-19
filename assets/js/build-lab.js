@@ -28,7 +28,7 @@ function runPreview(){
   if(!preview||!htmlEditor||!cssEditor||!jsEditor)return;
   const safeCss=cssEditor.value.replace(/<\/style/gi,"<\\/style");
   const safeJs=jsEditor.value.replace(/<\/script/gi,"<\\/script");
-  const source="<!doctype html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style>"+safeCss+"</style></head><body>"+htmlEditor.value+"<script>window.addEventListener('error',function(event){parent.postMessage({type:'portfolio-playground-error',message:event.message},'*')});"+safeJs+"<\\/script></body></html>";
+  const source="<!doctype html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style>"+safeCss+"</style></head><body>"+htmlEditor.value+"<script>window.addEventListener('error',function(event){parent.postMessage({type:'portfolio-playground-error',message:event.message},'*')});"+safeJs+"</script></body></html>";
   preview.srcdoc=source;
   if(previewStatus)previewStatus.textContent="Preview updated";
 }
