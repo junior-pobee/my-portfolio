@@ -16,6 +16,9 @@ if(section&&"IntersectionObserver"in window){
   moduleObserver.observe(section);
 }else loadModules();
 
+const pythonRunButton=document.getElementById("runPython");
+pythonRunButton?.addEventListener("click",()=>import("./python-lab.js").catch(error=>{const output=document.getElementById("pythonOutput");const status=document.getElementById("pythonStatus");if(output)output.textContent=String(error);if(status)status.textContent="Python module failed to load"}),{once:true});
+
 const htmlEditor=document.getElementById("playgroundHtml");
 const cssEditor=document.getElementById("playgroundCss");
 const jsEditor=document.getElementById("playgroundJs");
