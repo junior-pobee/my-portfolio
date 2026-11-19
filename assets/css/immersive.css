@@ -1,0 +1,114 @@
+#portfolio-3d {
+  position: absolute;
+  inset: -18% -20%;
+  z-index: 0;
+  width: 140%;
+  height: 136%;
+  pointer-events: none;
+  overflow: visible;
+  opacity: .92;
+  filter: saturate(1.1);
+}
+.hero-visual {
+  isolation: isolate;
+}
+.profile-frame {
+  z-index: 1;
+}
+.floating-card {
+  z-index: 2;
+}
+.scene-toggle {
+  position: absolute;
+  top: -12px;
+  right: 0;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid rgba(85, 231, 255, .28);
+  border-radius: 999px;
+  background: rgba(7, 15, 29, .72);
+  color: #dffaff;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+  transition: .25s ease;
+}
+.scene-toggle:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 24px rgba(85, 231, 255, .18);
+  transform: translateY(-2px);
+}
+.scene-toggle::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+}
+.project-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform .18s ease-out, border-color .35s ease, box-shadow .35s ease;
+}
+.project-card.is-tilting {
+  box-shadow: 0 28px 70px rgba(0, 0, 0, .28), 0 0 35px rgba(85, 231, 255, .08);
+}
+.project-card .project-info,
+.project-card .project-cover {
+  transform: translateZ(10px);
+}
+html[data-theme="light"] .scene-toggle {
+  color: #56220e;
+  background: rgba(255, 247, 232, .88);
+  border-color: rgba(184, 64, 15, .3);
+}
+html[data-theme="light"] #portfolio-3d {
+  opacity: .48;
+  filter: saturate(.8);
+}
+@media (max-width: 760px) {
+  #portfolio-3d {
+    inset: -12% -24%;
+    width: 148%;
+    height: 124%;
+    opacity: .72;
+  }
+  .scene-toggle {
+    top: -7px;
+    right: 2px;
+  }
+}
+@media (max-width: 480px) {
+  #portfolio-3d {
+    inset: -8% -30%;
+    width: 160%;
+    height: 116%;
+    opacity: .58;
+  }
+  .scene-toggle {
+    font-size: .64rem;
+    min-height: 32px;
+    padding: 6px 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #portfolio-3d {
+    opacity: .42;
+  }
+  .scene-toggle {
+    display: none;
+  }
+  .project-card,
+  .project-card.is-tilting {
+    transform: none !important;
+    transition: none !important;
+  }
+}
