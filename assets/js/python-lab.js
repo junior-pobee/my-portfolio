@@ -38,7 +38,12 @@ async function executePython(){
   }
 }
 runButton?.addEventListener("click",executePython);
-export {executePython as runPython};
+function resetPython(){
+  if(editor)editor.value=initial;
+  if(output)output.textContent="Sample restored. Press Run Python to execute it.";
+  if(status)status.textContent=pyodide?"Runtime ready":"Runtime not loaded";
+}
+export {executePython as runPython,resetPython};
 resetButton?.addEventListener("click",()=>{
   if(editor)editor.value=initial;
   if(output)output.textContent="Sample restored. Press Run Python to execute it.";
