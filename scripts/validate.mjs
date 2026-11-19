@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 
 const html = readFileSync("index.html", "utf8");
-const ids = [...html.matchAll(/\\bid=["']([^"']+)["']/g)].map((match) => match[1]);
+const ids = [...html.matchAll(/\\sid=["']([^"']+)["']/g)].map((match) => match[1]);
 const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
 const references = [...html.matchAll(/(?:src|href)=["']([^"'#]+)["']/g)].map((match) => match[1]);
 const localReferences = references.filter((reference) => !/^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(reference));
