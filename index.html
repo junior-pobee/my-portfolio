@@ -1988,6 +1988,15 @@ html[data-theme=light] footer{background:var(--surface)}
         <p class="lab-footnote">Rendering pauses when this panel is off-screen or the tab is hidden.</p>
       </article>
     </div>
+    <article class="lab-panel card glass python-lab">
+      <div class="lab-panel-heading"><span class="lab-kicker">PYTHON • WEBASSEMBLY</span><span class="lab-live"><i></i> On-demand runtime</span></div>
+      <div class="code-lab-heading"><div><h3>Python playground</h3><p class="muted">Run Python directly in your browser. The runtime loads only when you press Start, helping keep the portfolio lightweight.</p></div><div class="code-actions"><button class="btn btn-outline" id="resetPython" type="button">Reset</button><button class="btn btn-primary" id="runPython" type="button">Start Python</button></div></div>
+      <label class="code-editor python-editor"><span>PYTHON CODE</span><textarea id="pythonCode" spellcheck="false" autocapitalize="off" autocomplete="off">name = "Builder"
+for number in range(1, 4):
+    print(f"Hello, {name}! Run {number}")</textarea></label>
+      <div class="preview-heading"><strong>Python output</strong><span id="pythonStatus" aria-live="polite">Runtime not loaded</span></div>
+      <pre id="pythonOutput" class="python-output" aria-live="polite">Press Start Python to load the runtime.</pre>
+    </article>
     <article class="lab-panel card glass code-lab">
       <div class="lab-panel-heading"><span class="lab-kicker">HTML • CSS • JAVASCRIPT</span><span class="lab-live"><i></i> Sandboxed preview</span></div>
       <div class="code-lab-heading"><div><h3>Browser playground</h3><p class="muted">Edit the sample, then run it. Your code executes in an isolated preview frame.</p></div><div class="code-actions"><button class="btn btn-outline" id="resetPlayground" type="button">Reset</button><button class="btn btn-primary" id="runPlayground" type="button">Run preview ↗</button></div></div>
