@@ -273,7 +273,7 @@ if (canvas && hero) {
     starGeometry.dispose();
     renderer.dispose();
   }, { once: true });
- catch {
+  } catch {
     canvas.style.display = "none";
   }
 }
