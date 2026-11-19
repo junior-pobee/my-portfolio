@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "typecheck": "tsc --noEmit",
+    "build": "tsc",
     "validate": "node scripts/validate.mjs",
-    "check": "npm run typecheck && npm run validate"
+    "check": "npm run typecheck && npm run build && npm run validate"
   },
   "devDependencies": {
     "typescript": "5.8.3"
