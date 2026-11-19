@@ -1,4 +1,4 @@
-export type TechnologyCategory = "Frontend" | "Backend" | "Data" | "Graphics" | "Automation";
+export type TechnologyCategory = "Frontend" | "Backend" | "Systems" | "Data" | "Graphics" | "Automation";
 
 export interface Technology {
   name: string;
@@ -17,9 +17,13 @@ export const technologies: Technology[] = [
   { name: "Tailwind CSS", category: "Frontend", description: "Utility-first styling for consistent design systems.", stage: "Exploring", tags: ["CSS", "Design"] },
   { name: "Next.js", category: "Frontend", description: "React application architecture and full-stack web patterns.", stage: "Exploring", tags: ["React", "Framework"] },
   { name: "Node.js", category: "Backend", description: "JavaScript runtime for tooling, servers, and developer workflows.", stage: "Exploring", tags: ["JavaScript", "Runtime"] },
+  { name: "Python", category: "Data", description: "General-purpose programming, scripting, and data workflows.", stage: "Exploring", tags: ["Programming", "Automation"] },
+  { name: "C", category: "Systems", description: "Foundational programming, memory concepts, and efficient low-level applications.", stage: "Learning", tags: ["Systems", "Programming"] },
+  { name: "C++", category: "Systems", description: "Performance-oriented programming, object-oriented design, and systems development.", stage: "Exploring", tags: ["Systems", "Performance"] },
+  { name: "Java", category: "Backend", description: "Object-oriented programming and cross-platform application development.", stage: "Exploring", tags: ["OOP", "JVM"] },
+  { name: "Rust", category: "Systems", description: "Memory-safe systems programming and reliable high-performance software.", stage: "Exploring", tags: ["Systems", "Safety"] },
   { name: "SQL", category: "Data", description: "Structured queries and relational database concepts.", stage: "Learning", tags: ["Database", "Queries"] },
   { name: "Supabase", category: "Data", description: "Managed database, authentication, and application services.", stage: "Building", tags: ["Backend", "Database"] },
-  { name: "Python", category: "Data", description: "General-purpose programming, scripting, and data workflows.", stage: "Exploring", tags: ["Programming", "Automation"] },
   { name: "GLSL", category: "Graphics", description: "Shader programming for real-time visual effects.", stage: "Exploring", tags: ["Shaders", "Rendering"] },
   { name: "Three.js", category: "Graphics", description: "Interactive 3D graphics in the browser.", stage: "Learning", tags: ["3D", "WebGL"] },
   { name: "Bash", category: "Automation", description: "Command-line workflows and development automation.", stage: "Exploring", tags: ["Shell", "CLI"] }
@@ -41,7 +45,7 @@ if (explorer) {
   const search = explorer.querySelector<HTMLInputElement>("[data-stack-search]");
   const results = explorer.querySelector<HTMLElement>("[data-stack-results]");
   const count = explorer.querySelector<HTMLElement>("[data-stack-count]");
-  const categories: Array<TechnologyCategory | "All"> = ["All", "Frontend", "Backend", "Data", "Graphics", "Automation"];
+  const categories: Array<TechnologyCategory | "All"> = ["All", "Frontend", "Backend", "Systems", "Data", "Graphics", "Automation"];
 
   if (filters && search && results && count) {
     let activeCategory: TechnologyCategory | "All" = "All";
