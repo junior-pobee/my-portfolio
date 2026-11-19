@@ -1505,6 +1505,7 @@ html[data-theme=light] .text-link:hover{color:var(--text)}
 html[data-theme=light] .project-tech span{color:var(--text)}
 html[data-theme=light] footer{background:var(--surface)}
 </style>
+  <link rel="stylesheet" href="assets/css/immersive.css">
 </head>
 
 <body>
@@ -1607,6 +1608,8 @@ html[data-theme=light] footer{background:var(--surface)}
       </div>
 
       <div class="hero-visual">
+        <canvas id="portfolio-3d" aria-hidden="true"></canvas>
+        <button class="scene-toggle" id="sceneToggle" type="button" aria-pressed="false">Pause 3D motion</button>
 
         <div class="profile-frame">
 
@@ -3304,5 +3307,6 @@ function frame(ts){requestAnimationFrame(frame);if(root.dataset.theme!=='light'|
 requestAnimationFrame(frame);
 })();
 </script>
+  <script type="module" src="assets/js/immersive.js"></script>
 </body>
 </html>
