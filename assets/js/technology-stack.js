@@ -1,4 +1,9 @@
 export const technologies = [
+    { name: "C", category: "Systems", description: "Foundational programming, memory concepts, and efficient low-level applications.", stage: "Learning", tags: ["Systems", "Programming"] },
+    { name: "C++", category: "Systems", description: "Performance-oriented programming, object-oriented design, and systems development.", stage: "Exploring", tags: ["Systems", "Performance"] },
+    { name: "Java", category: "Backend", description: "Object-oriented programming and cross-platform application development.", stage: "Exploring", tags: ["OOP", "JVM"] },
+    { name: "Rust", category: "Systems", description: "Memory-safe systems programming and reliable high-performance software.", stage: "Exploring", tags: ["Systems", "Safety"] },
+    { name: "Node.js", category: "Backend", description: "JavaScript runtime for server-side applications and developer tooling.", stage: "Exploring", tags: ["JavaScript", "Runtime"] },
     { name: "HTML", category: "Frontend", description: "Semantic structure for accessible web experiences.", stage: "Building", tags: ["Web", "Markup"] },
     { name: "CSS", category: "Frontend", description: "Responsive layouts, visual systems, and interface styling.", stage: "Building", tags: ["Web", "Design"] },
     { name: "JavaScript", category: "Frontend", description: "Interactive browser experiences and application logic.", stage: "Building", tags: ["Web", "Programming"] },
@@ -27,7 +32,7 @@ if (explorer) {
     const search = explorer.querySelector("[data-stack-search]");
     const results = explorer.querySelector("[data-stack-results]");
     const count = explorer.querySelector("[data-stack-count]");
-    const categories = ["All", "Frontend", "Data", "Graphics", "Automation"];
+    const categories = ["All", "Frontend", "Backend", "Systems", "Data", "Graphics", "Automation"];
     if (filters && search && results && count) {
         let activeCategory = "All";
         const createElement = (tag, className = "", content = "") => {
