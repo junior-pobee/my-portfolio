@@ -8,6 +8,7 @@ const finePointer = window.matchMedia("(pointer: fine)");
 const smallScreen = window.matchMedia("(max-width: 760px)");
 
 if (canvas && hero) {
+  try {
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
@@ -182,10 +183,8 @@ if (canvas && hero) {
 
     frame = requestAnimationFrame(animate);
     const elapsed = clock.getElapsedTime();
-    root.rotation.y += .0018;
-    root.rotation.x += .0007;
-    root.rotation.y += (targetRotation.x - root.rotation.y) * .012;
-    root.rotation.x += (targetRotation.y - root.rotation.x) * .012;
+    root.rotation.y = elapsed * .08 + targetRotation.x;
+    root.rotation.x = Math.sin(elapsed * .14) * .06 + targetRotation.y;
     core.rotation.y = elapsed * .08;
     wire.rotation.y = -elapsed * .055;
     wire.rotation.x = elapsed * .035;
@@ -274,6 +273,9 @@ if (canvas && hero) {
     starGeometry.dispose();
     renderer.dispose();
   }, { once: true });
+ catch {
+    canvas.style.display = "none";
+  }
 }
 
 if (finePointer.matches) {
