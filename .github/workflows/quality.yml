@@ -1,0 +1,27 @@
+name: Portfolio quality checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install validation dependency
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Run TypeScript and portfolio checks
+        run: npm run check
